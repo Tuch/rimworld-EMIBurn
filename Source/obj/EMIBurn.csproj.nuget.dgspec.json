@@ -1,0 +1,63 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/tuch/Projects/rimworld-EMIBurn/Source/EMIBurn.csproj": {}
+  },
+  "projects": {
+    "/Users/tuch/Projects/rimworld-EMIBurn/Source/EMIBurn.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/tuch/Projects/rimworld-EMIBurn/Source/EMIBurn.csproj",
+        "projectName": "EMIBurn",
+        "projectPath": "/Users/tuch/Projects/rimworld-EMIBurn/Source/EMIBurn.csproj",
+        "packagesPath": "/Users/tuch/.nuget/packages/",
+        "outputPath": "/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "/Users/tuch/Library/Application Support/Steam/steamapps/common/RimWorld/RimWorldMac.app/Contents/Resources/Data/Managed"
+        ],
+        "configFilePaths": [
+          "/Users/tuch/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/library-packs": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Microsoft.NETFramework.ReferenceAssemblies": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet/9.0.7/libexec/sdk/9.0.108/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

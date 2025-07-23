@@ -1,0 +1,10 @@
+<LanguageData>
+  <EMIBurn_SettingsCategory>EMIBurn</EMIBurn_SettingsCategory>
+  <EMIBurn_FireChanceLabel>Fire chance (%): {0}</EMIBurn_FireChanceLabel>
+  <EMIBurn_IntervalLabel>Interval (in ticks): {0}</EMIBurn_IntervalLabel>
+  <EMIBurn_NotifyLabel>Show fire notifications</EMIBurn_NotifyLabel>
+  <EMIBurn_ResetButton>Reset to default</EMIBurn_ResetButton>
+  <EMIBurn_ResetMessage>Settings reset to default (will be saved with the save file)</EMIBurn_ResetMessage>
+  <EMIBurn_NotAvailable>Settings are only available after starting the game.</EMIBurn_NotAvailable>
+  <EMIBurn_AlertFire>{0} caught fire due to electromagnetic interference!</EMIBurn_AlertFire>
+</LanguageData>

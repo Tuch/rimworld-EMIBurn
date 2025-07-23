@@ -1,0 +1,10 @@
+<LanguageData>
+  <EMIBurn_SettingsCategory>EMIBurn</EMIBurn_SettingsCategory>
+  <EMIBurn_FireChanceLabel>Шанс возгорания (%): {0}</EMIBurn_FireChanceLabel>
+  <EMIBurn_IntervalLabel>Интервал (в тиках): {0}</EMIBurn_IntervalLabel>
+  <EMIBurn_NotifyLabel>Показывать уведомления о пожаре</EMIBurn_NotifyLabel>
+  <EMIBurn_ResetButton>Сбросить по умолчанию</EMIBurn_ResetButton>
+  <EMIBurn_ResetMessage>Настройки сброшены по умолчанию (сохранятся с сейвом)</EMIBurn_ResetMessage>
+  <EMIBurn_NotAvailable>Настройки доступны только после запуска игры.</EMIBurn_NotAvailable>
+  <EMIBurn_AlertFire>{0} загорелся из-за электромагнитных помех!</EMIBurn_AlertFire>
+</LanguageData>
