@@ -20,6 +20,12 @@ Targets RimWorld 1.4/1.5/1.6, depends on Harmony.
 Harmony (`Assembly-CSharp.dll`, `Verse.dll`, `0Harmony.dll`). Update the
 `<HintPath>`s if the install location changes.
 
+## Why it's built this way
+
+The non-obvious decisions (patch targets, no XML Defs, flame-explosion ignition,
+single-assembly packaging) are recorded as ADRs in [`docs/adr/`](docs/adr/) —
+read those before changing the mechanic, and add a new ADR when you change one.
+
 ## Architecture (whole mod is 4 files under `Source/`)
 
 - `EMIBurn.cs` — `Mod` entry point; runs `harmony.PatchAll()`.

@@ -41,6 +41,7 @@ rsync -a \
     --exclude 'a.txt' \
     --exclude '*.sh' \
     --exclude '*.md' \
+    --exclude 'docs' \
     --exclude '/EMIBurn.png' \
     --exclude '/workshop-description.txt' \
     ./ "$TARGET_MOD_DIR/"
