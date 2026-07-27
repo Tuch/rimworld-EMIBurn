@@ -1,29 +1,48 @@
 #!/bin/bash
+set -euo pipefail
 
 echo "📦 Installing EMIBurn mod for RimWorld..."
 
 MOD_NAME="EMIBurn"
-DLL_NAME="$MOD_NAME.dll"
-BUILD_OUTPUT="Assemblies"
-
-# Path to RimWorld Mods folder
+DLL_PATH="Assemblies/net472/$MOD_NAME.dll"
 TARGET_MOD_DIR="/Users/tuch/Library/Application Support/Steam/steamapps/common/RimWorld/RimWorldMac.app/Mods/$MOD_NAME"
 
 # Make sure the build exists
-if [ ! -f "$BUILD_OUTPUT/net472/$DLL_NAME" ]; then
-    echo "❌ File $BUILD_OUTPUT/$DLL_NAME not found. Run ./build.sh first"
+if [ ! -f "$DLL_PATH" ]; then
+    echo "❌ $DLL_PATH not found. Run ./build.sh first"
     exit 1
 fi
 
-# Create destination folder and subfolders
+# Safety guard: never rm -rf an empty/unexpected path
+case "$TARGET_MOD_DIR" in
+    */Mods/"$MOD_NAME") ;;
+    *) echo "❌ Refusing to touch unexpected target: $TARGET_MOD_DIR"; exit 1 ;;
+esac
+
+# Clean any previous install (removes stale/duplicate DLLs and junk)
+rm -rf "$TARGET_MOD_DIR"
 mkdir -p "$TARGET_MOD_DIR/Assemblies"
 
-# Copy .dll
-cp "$BUILD_OUTPUT/net472/$DLL_NAME" "$TARGET_MOD_DIR/Assemblies/"
+# Exactly one copy of the assembly, at the top level of Assemblies/.
+# RimWorld loads Assemblies/ recursively, so a second copy in net472/ would
+# load the mod twice (duplicate Harmony patches / type clashes) — avoid that.
+cp "$DLL_PATH" "$TARGET_MOD_DIR/Assemblies/$MOD_NAME.dll"
 
-# Copy all mod files except source code and build artifacts
+# Copy the shippable mod content, excluding source, build output, VCS and junk.
 echo "📁 Copying mod files..."
-rsync -av --exclude 'Source' --exclude 'bin' --exclude 'obj' --exclude 'build.sh' --exclude 'install.sh' . "$TARGET_MOD_DIR/"
+rsync -a \
+    --exclude 'Source' \
+    --exclude 'Assemblies' \
+    --exclude 'obj' \
+    --exclude 'bin' \
+    --exclude '.git' \
+    --exclude '.gitignore' \
+    --exclude '.DS_Store' \
+    --exclude 'a.txt' \
+    --exclude '*.sh' \
+    --exclude '*.md' \
+    ./ "$TARGET_MOD_DIR/"
 
 echo "✅ Mod installed to:"
 echo "$TARGET_MOD_DIR"
+echo "   Restart RimWorld and enable EMIBurn (below Harmony) in the mod list."

@@ -1,0 +1,11 @@
+# Build artifacts
+Source/obj/
+Source/bin/
+bin/
+
+# macOS junk
+.DS_Store
+**/.DS_Store
+
+# Scratch / logs
+a.txt

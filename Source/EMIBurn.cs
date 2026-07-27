@@ -30,8 +30,17 @@ namespace EMIBurn
             list.Label("EMIBurn_FireChanceLabel".Translate((settings.fireChance * 100f).ToString("F0")));
             settings.fireChance = list.Slider(settings.fireChance, 0f, 1f);
 
-            list.Label("EMIBurn_IntervalLabel".Translate(settings.intervalTicks));
-            settings.intervalTicks = (int)list.Slider(settings.intervalTicks, 1000, 10000);
+            list.Label("EMIBurn_IntervalMinLabel".Translate(settings.intervalMinTicks));
+            settings.intervalMinTicks = (int)list.Slider(settings.intervalMinTicks, 1000, 10000);
+
+            list.Label("EMIBurn_IntervalMaxLabel".Translate(settings.intervalMaxTicks));
+            settings.intervalMaxTicks = (int)list.Slider(settings.intervalMaxTicks, 1000, 10000);
+
+            // Keep the range valid: min must not exceed max.
+            if (settings.intervalMinTicks > settings.intervalMaxTicks)
+            {
+                settings.intervalMaxTicks = settings.intervalMinTicks;
+            }
 
             list.CheckboxLabeled("EMIBurn_NotifyLabel".Translate(), ref settings.enableNotifications);
 
@@ -42,7 +51,39 @@ namespace EMIBurn
                 Messages.Message("EMIBurn_ResetMessage".Translate(), MessageTypeDefOf.RejectInput);
             }
 
+            // Dev-only: fire an EMI event (vanilla solar flare) on the current map for testing.
+            if (Prefs.DevMode)
+            {
+                list.GapLine();
+                list.Label("EMIBurn_DevSectionLabel".Translate());
+                if (list.ButtonText("EMIBurn_DevTriggerButton".Translate()))
+                {
+                    TriggerEMIEvent();
+                }
+            }
+
             list.End();
+        }
+
+        private static void TriggerEMIEvent()
+        {
+            Map map = Find.CurrentMap;
+            if (map == null)
+            {
+                Messages.Message("EMIBurn_DevNoMap".Translate(), MessageTypeDefOf.RejectInput);
+                return;
+            }
+
+            IncidentDef incident = IncidentDefOf.SolarFlare;
+            IncidentParms parms = StorytellerUtility.DefaultParmsNow(incident.category, map);
+            if (incident.Worker.TryExecute(parms))
+            {
+                Messages.Message("EMIBurn_DevTriggered".Translate(), MessageTypeDefOf.PositiveEvent);
+            }
+            else
+            {
+                Messages.Message("EMIBurn_DevFailed".Translate(), MessageTypeDefOf.RejectInput);
+            }
         }
 
         public override string SettingsCategory()

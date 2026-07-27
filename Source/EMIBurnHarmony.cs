@@ -1,36 +1,20 @@
 using HarmonyLib;
-using Verse;
 using RimWorld;
+using Verse;
 
 namespace EMIBurn
 {
-    [HarmonyPatch(typeof(Building), "Tick")]
-    public static class Patch_EMIDynamo_Tick
+    // Core of the mod: a solar flare (an "EMI" event) uses GameCondition_DisableElectricity,
+    // whose ElectricityDisabled flag makes PowerNet.PowerNetTick cut all power.
+    // GameConditionManager.ElectricityDisabled(Map) is the single gate every power net checks.
+    // We force it to false so power KEEPS running during a flare. The overheating/fire risk
+    // that replaces the shutdown is applied by MapComponent_EMIBurn.
+    [HarmonyPatch(typeof(GameConditionManager), nameof(GameConditionManager.ElectricityDisabled))]
+    public static class Patch_GameConditionManager_ElectricityDisabled
     {
-        public static bool Prefix(Building __instance)
+        static void Postfix(ref bool __result)
         {
-            // Disable standard EMI Dynamo behavior (power shutdown)
-            // Check if this is specifically an EMI Dynamo
-            if (__instance.def.defName == "EMIDynamo")
-            {
-                return false; // Disable standard behavior
-            }
-            return true; // Keep standard behavior for other buildings
+            __result = false;
         }
     }
-
-    [HarmonyPatch(typeof(GameCondition), "Tick")]
-    public static class Patch_EMIField_Tick
-    {
-        public static bool Prefix(GameCondition __instance)
-        {
-            // Disable standard EMI Field behavior (power shutdown)
-            // Check if this is specifically an EMI Field
-            if (__instance.def.defName == "EMIField")
-            {
-                return false; // Disable standard behavior
-            }
-            return true; // Keep standard behavior for other conditions
-        }
-    }
-} 
+}

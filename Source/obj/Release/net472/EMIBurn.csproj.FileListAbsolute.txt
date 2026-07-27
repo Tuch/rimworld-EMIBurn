@@ -1,9 +1,0 @@
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.csproj.AssemblyReference.cache
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.GeneratedMSBuildEditorConfig.editorconfig
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.AssemblyInfoInputs.cache
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.AssemblyInfo.cs
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.csproj.CoreCompileInputs.cache
-/Users/tuch/Projects/rimworld-EMIBurn/Assemblies/net472/EMIBurn.dll
-/Users/tuch/Projects/rimworld-EMIBurn/Assemblies/net472/EMIBurn.pdb
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.dll
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net472/EMIBurn.pdb

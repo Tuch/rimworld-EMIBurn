@@ -1,4 +1,0 @@
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net48/EMIBurn.GeneratedMSBuildEditorConfig.editorconfig
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net48/EMIBurn.AssemblyInfoInputs.cache
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net48/EMIBurn.AssemblyInfo.cs
-/Users/tuch/Projects/rimworld-EMIBurn/Source/obj/Release/net48/EMIBurn.csproj.CoreCompileInputs.cache

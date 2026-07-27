@@ -1,10 +1,16 @@
 <LanguageData>
   <EMIBurn_SettingsCategory>EMIBurn</EMIBurn_SettingsCategory>
   <EMIBurn_FireChanceLabel>Fire chance (%): {0}</EMIBurn_FireChanceLabel>
-  <EMIBurn_IntervalLabel>Interval (in ticks): {0}</EMIBurn_IntervalLabel>
+  <EMIBurn_IntervalMinLabel>Min interval (in ticks): {0}</EMIBurn_IntervalMinLabel>
+  <EMIBurn_IntervalMaxLabel>Max interval (in ticks): {0}</EMIBurn_IntervalMaxLabel>
   <EMIBurn_NotifyLabel>Show fire notifications</EMIBurn_NotifyLabel>
   <EMIBurn_ResetButton>Reset to default</EMIBurn_ResetButton>
   <EMIBurn_ResetMessage>Settings reset to default (will be saved with the save file)</EMIBurn_ResetMessage>
   <EMIBurn_NotAvailable>Settings are only available after starting the game.</EMIBurn_NotAvailable>
   <EMIBurn_AlertFire>{0} caught fire due to electromagnetic interference!</EMIBurn_AlertFire>
+  <EMIBurn_DevSectionLabel>Developer tools</EMIBurn_DevSectionLabel>
+  <EMIBurn_DevTriggerButton>Trigger EMI event (solar flare) now</EMIBurn_DevTriggerButton>
+  <EMIBurn_DevTriggered>EMI event started on the current map.</EMIBurn_DevTriggered>
+  <EMIBurn_DevFailed>Could not start an EMI event right now.</EMIBurn_DevFailed>
+  <EMIBurn_DevNoMap>No active map to trigger an EMI event on.</EMIBurn_DevNoMap>
 </LanguageData>

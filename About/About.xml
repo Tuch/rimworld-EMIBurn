@@ -2,9 +2,8 @@
   <name>EMIBurn</name>
   <author>Tuch</author>
   <packageId>Tuch.EMIBurn</packageId>
+  <url>https://github.com/Tuch/rimworld-EMIBurn</url>
   <supportedVersions>
-    <li>1.4</li>
-    <li>1.5</li>
     <li>1.6</li>
   </supportedVersions>
   <modDependencies>
@@ -16,6 +15,14 @@
     </li>
   </modDependencies>
   <description>
-    Replaces standard EMI behavior. Instead of shutting down electricity, EMI sources now cause overheating of powered devices with a chance of fire. Players must manually turn off power to avoid fires.
+    Changes what a solar flare does to your colony.
+
+    In vanilla, a solar flare simply shuts all electricity off until it passes. EMIBurn replaces that: power keeps running, but your energized devices can overheat and burst into flame. To stay safe you must manually switch off power to anything you don't want burning.
+
+    Power generators (solar panels, geothermal, wind, and modded ones) are never damaged — they're the source you can't switch off to protect.
+
+    Fire chance and the random interval between flare-ups are configurable in the mod settings (available after loading a game).
+
+    Requires Harmony. Source: https://github.com/Tuch/rimworld-EMIBurn
   </description>
 </ModMetaData>
