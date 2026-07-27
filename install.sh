@@ -42,6 +42,7 @@ rsync -a \
     --exclude '*.sh' \
     --exclude '*.md' \
     --exclude '/EMIBurn.png' \
+    --exclude '/workshop-description.txt' \
     ./ "$TARGET_MOD_DIR/"
 
 echo "✅ Mod installed to:"

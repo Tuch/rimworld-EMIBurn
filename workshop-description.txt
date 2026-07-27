@@ -1,0 +1,34 @@
+[h1]EMIBurn[/h1]
+
+[b]Changes what a solar flare does to your colony.[/b]
+
+In vanilla, a solar flare simply shuts all electricity off until it passes. EMIBurn replaces that: the power keeps running, but your energized devices can [b]overheat and burst into flame[/b]. To stay safe you now have to [i]manually[/i] switch off power to anything you don't want burning.
+
+[h1]How it works[/h1]
+[list]
+[*]During a solar flare, electricity is [b]no longer disabled[/b] — everything stays powered.
+[*]While the flare is active, powered devices have a chance to overheat and catch fire.
+[*]The fire is a small flame burst: it damages the device and can ignite anything flammable around it (wooden walls, furniture, chemfuel, etc.).
+[*]You survive by flicking off power to the devices you want to protect.
+[/list]
+
+[h1]Generators are safe[/h1]
+Power [b]generators[/b] — solar panels, geothermal, wind, and modded ones — are never damaged. They're the source you can't switch off to protect, so EMI leaves them alone. Only powered [i]consumers[/i] are at risk.
+
+[h1]Settings[/h1]
+Configurable in [b]Options → Mod settings → EMIBurn[/b] (after loading a game):
+[list]
+[*][b]Fire chance (%)[/b] — chance per device, per interval, to burst into flame during a flare.
+[*][b]Min / Max interval[/b] — each fire check waits a random amount of time within this range.
+[*][b]Show fire notifications[/b] — get a threat alert when a device ignites.
+[/list]
+
+[h1]Compatibility[/h1]
+[list]
+[*]RimWorld [b]1.6[/b].
+[*]Requires [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077]Harmony[/url].
+[*]Safe to add to an existing save. Works with modded generators and modded powered devices.
+[/list]
+
+[h1]Source[/h1]
+Open source: [url=https://github.com/Tuch/rimworld-EMIBurn]github.com/Tuch/rimworld-EMIBurn[/url]
