@@ -41,6 +41,7 @@ rsync -a \
     --exclude 'a.txt' \
     --exclude '*.sh' \
     --exclude '*.md' \
+    --exclude '/emiBURN.png' \
     ./ "$TARGET_MOD_DIR/"
 
 echo "✅ Mod installed to:"
