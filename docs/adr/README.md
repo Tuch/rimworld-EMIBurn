@@ -35,3 +35,4 @@ Skip trivial or purely mechanical changes.
 | 0004 | [Ignite powered devices with a flame explosion](0004-flame-explosion-ignition.md) | Accepted |
 | 0005 | [Store settings in a per-save GameComponent](0005-settings-in-gamecomponent.md) | Accepted |
 | 0006 | [Single-assembly packaging and clean-copy install](0006-single-assembly-packaging.md) | Accepted |
+| 0007 | [Develop against the local copy; one active copy at a time](0007-dev-loop-and-publishing.md) | Accepted |

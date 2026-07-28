@@ -7,7 +7,7 @@ Guidance for working in this repo. See `README.md` for the user-facing descripti
 RimWorld C# mod (net472). A solar flare ("EMI" event) normally shuts off all
 power. EMIBurn instead **keeps power on during a flare and makes powered
 buildings catch fire**, so the player must manually flick off electricity.
-Targets RimWorld 1.4/1.5/1.6, depends on Harmony.
+Targets RimWorld 1.6, depends on Harmony.
 
 ## Commands
 
@@ -19,6 +19,20 @@ Targets RimWorld 1.4/1.5/1.6, depends on Harmony.
 `Source/EMIBurn.csproj` hard-codes local paths to the Steam RimWorld install and
 Harmony (`Assembly-CSharp.dll`, `Verse.dll`, `0Harmony.dll`). Update the
 `<HintPath>`s if the install location changes.
+
+## Dev loop & publishing (see ADR-0007)
+
+The local `Mods/EMIBurn` copy is the working copy AND the source of Workshop
+updates. Loop: edit → `./build.sh && ./install.sh` → test in-game.
+
+- **One active copy at a time.** Publishing + subscribing gives two mods with the
+  same `packageId` (`Tuch.EMIBurn`) → duplicate-load conflict. Stay **unsubscribed**
+  from your own Workshop item while developing.
+- **Publish updates from the local copy**: in-game Mods → select EMIBurn → the
+  upload button acts as **Update** (because `About/PublishedFileId.txt`, item
+  `3772681865`, is tracked in the repo). No subscription needed to publish.
+- **Never delete `About/PublishedFileId.txt`** — it is the Workshop link; it's
+  tracked so `install.sh`'s wipe-and-copy always restores it.
 
 ## Why it's built this way
 
