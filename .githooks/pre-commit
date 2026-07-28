@@ -1,0 +1,24 @@
+#!/bin/bash
+# Pre-commit: when staged changes touch C# source, rebuild EMIBurn.dll and keep the
+# committed binary in sync. Aborts the commit if the build fails.
+#
+# Enable once per clone:  git config core.hooksPath .githooks
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "$repo_root"
+
+# Only rebuild when staged (added/copied/modified) files include compiled sources.
+if git diff --cached --name-only --diff-filter=ACM | grep -qE '^Source/.*\.(cs|csproj)$'; then
+    echo "[pre-commit] C# source staged — building EMIBurn.dll..."
+    if ! ./build.sh > /tmp/emiburn-precommit-build.log 2>&1; then
+        echo "[pre-commit] BUILD FAILED — commit aborted. Last lines:" >&2
+        tail -25 /tmp/emiburn-precommit-build.log >&2
+        exit 1
+    fi
+    # Keep the tracked binary matching the just-built source.
+    git add Assemblies/net472/EMIBurn.dll Assemblies/net472/EMIBurn.pdb
+    echo "[pre-commit] build OK; staged updated DLL."
+else
+    echo "[pre-commit] no C# source staged — skipping build."
+fi

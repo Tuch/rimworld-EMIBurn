@@ -37,6 +37,7 @@ rsync -a \
     --exclude 'bin' \
     --exclude '.git' \
     --exclude '.gitignore' \
+    --exclude '.githooks' \
     --exclude '.DS_Store' \
     --exclude 'a.txt' \
     --exclude '*.sh' \

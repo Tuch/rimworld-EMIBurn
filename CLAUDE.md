@@ -25,6 +25,12 @@ Harmony (`Assembly-CSharp.dll`, `Verse.dll`, `0Harmony.dll`). Update the
 The local `Mods/EMIBurn` copy is the working copy AND the source of Workshop
 updates. Loop: edit → `./build.sh && ./install.sh` → test in-game.
 
+A tracked pre-commit hook (`.githooks/pre-commit`) rebuilds `EMIBurn.dll` and
+re-stages it whenever a commit touches `Source/*.cs`/`.csproj`, aborting the commit
+if the build fails — so the committed binary always matches source. Enable it once
+per clone: `git config core.hooksPath .githooks`. (A remote CI build isn't viable:
+the `.csproj` references local RimWorld/Harmony DLLs a CI runner doesn't have.)
+
 - **One active copy at a time.** Publishing + subscribing gives two mods with the
   same `packageId` (`Tuch.EMIBurn`) → duplicate-load conflict. Stay **unsubscribed**
   from your own Workshop item while developing.
