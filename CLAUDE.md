@@ -46,6 +46,11 @@ The non-obvious decisions (patch targets, no XML Defs, flame-explosion ignition,
 single-assembly packaging) are recorded as ADRs in [`docs/adr/`](docs/adr/) —
 read those before changing the mechanic, and add a new ADR when you change one.
 
+**Rule: every decision updates the docs in the same change.** After any
+architectural decision, write/supersede its ADR, add the index row, and sync every
+doc it touches (`CLAUDE.md`, `README.md`, language keys, …). A change isn't done
+until code and docs agree. See [`docs/adr/README.md`](docs/adr/README.md).
+
 ## Architecture (whole mod is 4 files under `Source/`)
 
 - `EMIBurn.cs` — `Mod` entry point; runs `harmony.PatchAll()`.

@@ -16,8 +16,11 @@ and [`CLAUDE.md`](../../CLAUDE.md).
 - ADRs are **immutable once Accepted**. To change a decision, write a new ADR and
   mark the old one `Superseded by ADR-NNNN` (and link back with `Supersedes`).
 - Every ADR is listed in the index table below.
-- When a decision changes a convention, sync the affected rules file
-  (`CLAUDE.md`, this repo's docs).
+- **Every decision updates the docs, in the same change.** After making an
+  architectural decision, record it as an ADR (or update the one it supersedes),
+  add its index row, and sync every doc it touches — `CLAUDE.md`, `README.md`,
+  language keys, whatever the change affects. A decision isn't done until the docs
+  match it.
 
 ## When to write one
 
@@ -36,3 +39,4 @@ Skip trivial or purely mechanical changes.
 | 0005 | [Store settings in a per-save GameComponent](0005-settings-in-gamecomponent.md) | Accepted |
 | 0006 | [Single-assembly packaging and clean-copy install](0006-single-assembly-packaging.md) | Accepted |
 | 0007 | [Develop against the local copy; one active copy at a time](0007-dev-loop-and-publishing.md) | Accepted |
+| 0008 | [Build in a pre-commit hook, not remote CI](0008-build-in-pre-commit-not-remote-ci.md) | Accepted |
