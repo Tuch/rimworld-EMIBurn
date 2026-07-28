@@ -7,7 +7,7 @@ passes. EMIBurn replaces that: **power keeps running, but your energized
 buildings can overheat and catch fire.** To stay safe you now have to *manually*
 flick off power to anything you don't want burning.
 
-Supported RimWorld versions: **1.4 / 1.5 / 1.6**. Requires [Harmony](https://github.com/pardeike/HarmonyRimWorld).
+Supported RimWorld version: **1.6**. Requires [Harmony](https://github.com/pardeike/HarmonyRimWorld).
 
 ## How it works
 
@@ -20,9 +20,12 @@ Two pieces do all the work:
 
 - **`MapComponent_EMIBurn`** (`Source/MapComponent_EMIBurn.cs`) —
   auto-instantiated on every map (no XML `Def` needed). While a solar flare
-  (`GameCondition_DisableElectricity`) is active, every `intervalTicks` it rolls
-  `fireChance` against each powered colonist building and, on a hit, sets it on
-  fire via `TryAttachFire` and optionally posts an alert.
+  (`GameCondition_DisableElectricity`) is active, on a random schedule within the
+  settings' `[min, max]` interval it rolls `fireChance` against each powered
+  colonist *consumer* and, on a hit, triggers a small flame explosion — damaging
+  the device and igniting flammable surroundings — then optionally posts an alert.
+  Power generators are exempt (see
+  [ADR-0004](docs/adr/0004-flame-explosion-ignition.md)).
 
 Settings live in **`EMIBurnSettings`**, a per-save `GameComponent`, so they are
 stored in the save file and are only editable once a game is loaded.
