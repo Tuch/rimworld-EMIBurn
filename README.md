@@ -21,11 +21,15 @@ Two pieces do all the work:
 - **`MapComponent_EMIBurn`** (`Source/MapComponent_EMIBurn.cs`) —
   auto-instantiated on every map (no XML `Def` needed). While a solar flare
   (`GameCondition_DisableElectricity`) is active, on a random schedule within the
-  settings' `[min, max]` interval it rolls `fireChance` against each powered
-  colonist *consumer* and, on a hit, triggers a small flame explosion — damaging
-  the device and igniting flammable surroundings — then optionally posts an alert.
-  Power generators are exempt (see
-  [ADR-0004](docs/adr/0004-flame-explosion-ignition.md)).
+  settings' `[min, max]` interval it rolls `fireChance` **once**; on a hit it picks
+  **one random at-risk device** and triggers a small flame explosion — damaging the
+  device and igniting flammable surroundings — then optionally posts an alert. (Rolling
+  per-device meant near-certain mass death on a large base — see
+  [ADR-0009](docs/adr/0009-one-ignition-per-interval.md).) An *at-risk* device is a
+  powered colonist *consumer* drawing at least the configured minimum; power generators
+  are exempt (see [ADR-0004](docs/adr/0004-flame-explosion-ignition.md)). While the flare
+  lasts, every at-risk device also shows a warning marker so you can react (see
+  [ADR-0010](docs/adr/0010-at-risk-overlay.md)).
 
 Settings live in **`EMIBurnSettings`**, a per-save `GameComponent`, so they are
 stored in the save file and are only editable once a game is loaded.
@@ -36,10 +40,12 @@ Configurable in *Options → Mod settings → EMIBurn* (after starting a game):
 
 | Setting | Default | Meaning |
 | --- | --- | --- |
-| Fire chance (%) | 5% | Chance per device, per interval, to burst into flame during a flare |
+| Fire chance per interval (%) | 5% | Chance, each interval, that **one** random at-risk device bursts into flame during a flare |
 | Min interval (ticks) | 2500 | Lower bound of the random gap between fire checks (2500 ticks ≈ 1 in-game hour) |
 | Max interval (ticks) | 7500 | Upper bound — each check waits a random amount in `[min, max]` |
+| Min. power draw to be at risk (W) | 100 | Devices drawing less than this are never targeted or marked (`0` = every powered consumer) |
 | Show fire notifications | on | Post a threat alert when a device ignites |
+| Show warning marker over at-risk devices | on | While a flare is active, mark every at-risk device so you can switch it off |
 
 Power **generators** (solar, geothermal, wind, … including modded ones — anything
 with `CompPowerPlant`) are exempt: they're the power source you can't switch off to

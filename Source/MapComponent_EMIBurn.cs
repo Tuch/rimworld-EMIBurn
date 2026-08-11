@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using RimWorld;
 using UnityEngine;
 using Verse;
@@ -15,6 +16,10 @@ namespace EMIBurn
         // [min, max] range each time so the timing isn't predictable. Persisted so a
         // reloaded save doesn't fire immediately.
         private int nextFireTick = -1;
+
+        // Reused scratch list for the at-risk candidates so the per-interval / per-frame scans
+        // don't allocate.
+        private readonly List<Building> atRiskScratch = new List<Building>();
 
         public MapComponent_EMIBurn(Map map) : base(map) { }
 
@@ -48,6 +53,28 @@ namespace EMIBurn
                 TryIgnitePoweredThings(settings);
         }
 
+        // Draw a warning marker over every at-risk device while a flare is active, so the player
+        // can see what to switch off. DrawOverlay is transient (re-queued every frame) and cleared
+        // by OverlayDrawer.DrawAllOverlays; only enqueue for the drawn map, otherwise the queue for
+        // a non-current map never gets flushed. See ADR-0010.
+        public override void MapComponentUpdate()
+        {
+            if (map != Find.CurrentMap)
+                return;
+
+            var settings = Current.Game?.GetComponent<EMIBurnSettings>();
+            if (settings == null || !settings.showRiskOverlay || !SolarFlareActive())
+                return;
+
+            var buildings = map.listerBuildings.allBuildingsColonist;
+            for (int i = 0; i < buildings.Count; i++)
+            {
+                var building = buildings[i];
+                if (IsAtRisk(building, settings))
+                    map.overlayDrawer.DrawOverlay(building, OverlayTypes.QuestionMark);
+            }
+        }
+
         private void ScheduleNext(EMIBurnSettings settings, int now)
         {
             int min = Mathf.Max(1, Mathf.Min(settings.intervalMinTicks, settings.intervalMaxTicks));
@@ -66,36 +93,56 @@ namespace EMIBurn
             return false;
         }
 
+        // One roll per interval decides whether *anything* burns; on a hit we ignite a single
+        // random at-risk device. Rolling fireChance per-device meant ~fireChance x deviceCount
+        // fires per interval — on a large colony that's near-guaranteed mass death. See ADR-0009.
         private void TryIgnitePoweredThings(EMIBurnSettings settings)
         {
+            if (Rand.Value >= settings.fireChance)
+                return;
+
+            atRiskScratch.Clear();
             var buildings = map.listerBuildings.allBuildingsColonist;
-            // Reverse loop: the explosion may destroy a building, mutating the list.
-            for (int i = buildings.Count - 1; i >= 0; i--)
+            for (int i = 0; i < buildings.Count; i++)
             {
                 var building = buildings[i];
-                var comp = building.GetComp<CompPowerTrader>();
-                if (comp == null || !comp.PowerOn)
-                    continue;
-
-                // Never damage power sources. Generators (solar, geothermal, wind, ... including
-                // modded ones) are producers you can't switch off to protect, so they are exempt.
-                // CompPowerPlant covers virtually all of them; PowerOutput > 0 is a safety net for
-                // any odd producer that doesn't derive from it.
-                if (building.GetComp<CompPowerPlant>() != null || comp.PowerOutput > 0f)
-                    continue;
-
-                if (Rand.Value < settings.fireChance)
-                {
-                    IgniteBuilding(building);
-                    if (settings.enableNotifications)
-                    {
-                        Messages.Message(
-                            "EMIBurn_AlertFire".Translate(building.LabelCap),
-                            building,
-                            MessageTypeDefOf.ThreatBig);
-                    }
-                }
+                if (IsAtRisk(building, settings))
+                    atRiskScratch.Add(building);
             }
+
+            if (atRiskScratch.Count == 0)
+                return;
+
+            var target = atRiskScratch.RandomElement();
+            IgniteBuilding(target);
+            if (settings.enableNotifications)
+            {
+                Messages.Message(
+                    "EMIBurn_AlertFire".Translate(target.LabelCap),
+                    target,
+                    MessageTypeDefOf.ThreatBig);
+            }
+
+            atRiskScratch.Clear();
+        }
+
+        // A device is at risk if it's a powered colonist consumer drawing at least the configured
+        // minimum. Power sources (generators — solar, geothermal, wind, ... incl. modded ones) are
+        // exempt: they're producers you can't switch off to protect. CompPowerPlant covers virtually
+        // all of them; PowerOutput > 0 is a safety net for any odd producer that doesn't derive from it.
+        private static bool IsAtRisk(Building building, EMIBurnSettings settings)
+        {
+            var comp = building.GetComp<CompPowerTrader>();
+            if (comp == null || !comp.PowerOn)
+                return false;
+
+            if (building.GetComp<CompPowerPlant>() != null || comp.PowerOutput > 0f)
+                return false;
+
+            // Consumers draw power, so PowerOutput is negative; its magnitude is the draw.
+            // Too little draw to "overheat" -> not a target.
+            float consumption = -comp.PowerOutput;
+            return consumption >= settings.minPowerConsumption;
         }
 
         // Vanilla fire can only "attach" to pawns, and most powered devices are steel

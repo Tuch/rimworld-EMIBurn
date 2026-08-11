@@ -40,3 +40,5 @@ Skip trivial or purely mechanical changes.
 | 0006 | [Single-assembly packaging and clean-copy install](0006-single-assembly-packaging.md) | Accepted |
 | 0007 | [Develop against the local copy; one active copy at a time](0007-dev-loop-and-publishing.md) | Accepted |
 | 0008 | [Build in a pre-commit hook, not remote CI](0008-build-in-pre-commit-not-remote-ci.md) | Accepted |
+| 0009 | [Ignite one random device per interval, not per-device rolls](0009-one-ignition-per-interval.md) | Accepted |
+| 0010 | [Show an at-risk overlay on devices during a flare](0010-at-risk-overlay.md) | Accepted |

@@ -1,9 +1,11 @@
 <LanguageData>
   <EMIBurn_SettingsCategory>EMIBurn</EMIBurn_SettingsCategory>
-  <EMIBurn_FireChanceLabel>Fire chance (%): {0}</EMIBurn_FireChanceLabel>
+  <EMIBurn_FireChanceLabel>Fire chance per interval (%): {0}</EMIBurn_FireChanceLabel>
   <EMIBurn_IntervalMinLabel>Min interval (in ticks): {0}</EMIBurn_IntervalMinLabel>
   <EMIBurn_IntervalMaxLabel>Max interval (in ticks): {0}</EMIBurn_IntervalMaxLabel>
+  <EMIBurn_MinPowerLabel>Min. power draw to be at risk (W): {0}</EMIBurn_MinPowerLabel>
   <EMIBurn_NotifyLabel>Show fire notifications</EMIBurn_NotifyLabel>
+  <EMIBurn_ShowOverlayLabel>Show a warning marker over at-risk devices</EMIBurn_ShowOverlayLabel>
   <EMIBurn_ResetButton>Reset to default</EMIBurn_ResetButton>
   <EMIBurn_ResetMessage>Settings reset to default (will be saved with the save file)</EMIBurn_ResetMessage>
   <EMIBurn_NotAvailable>Settings are only available after starting the game.</EMIBurn_NotAvailable>

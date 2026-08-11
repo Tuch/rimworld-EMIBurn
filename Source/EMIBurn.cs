@@ -42,7 +42,11 @@ namespace EMIBurn
                 settings.intervalMaxTicks = settings.intervalMinTicks;
             }
 
+            list.Label("EMIBurn_MinPowerLabel".Translate(settings.minPowerConsumption.ToString("F0")));
+            settings.minPowerConsumption = Mathf.Round(list.Slider(settings.minPowerConsumption, 0f, 2000f));
+
             list.CheckboxLabeled("EMIBurn_NotifyLabel".Translate(), ref settings.enableNotifications);
+            list.CheckboxLabeled("EMIBurn_ShowOverlayLabel".Translate(), ref settings.showRiskOverlay);
 
             list.Gap(12f);
             if (list.ButtonText("EMIBurn_ResetButton".Translate()))

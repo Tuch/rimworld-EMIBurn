@@ -62,10 +62,15 @@ until code and docs agree. See [`docs/adr/README.md`](docs/adr/README.md).
   (no `Def` needed — `Map.FillComponents` reflects over all `MapComponent`
   subclasses). Fires on a random schedule (`nextFireTick`, a random point in the
   settings' `[intervalMin, intervalMax]` range, persisted via ExposeData); when it
-  fires during a `GameCondition_DisableElectricity`, it rolls `fireChance` per
-  powered colonist consumer and triggers a small `DamageDefOf.Flame` explosion.
-  Power **generators** (`CompPowerPlant`, or any `CompPowerTrader` with
-  `PowerOutput > 0`) are skipped so the power source is never damaged.
+  fires during a `GameCondition_DisableElectricity`, it rolls `fireChance` **once**
+  and, on a hit, ignites **one random at-risk device** with a small
+  `DamageDefOf.Flame` explosion (per-device rolls were near-certain mass death on a
+  big base — ADR-0009). "At risk" (`IsAtRisk`) = a powered colonist `CompPowerTrader`
+  consumer drawing at least `minPowerConsumption` watts (`-PowerOutput`). Power
+  **generators** (`CompPowerPlant`, or any `CompPowerTrader` with `PowerOutput > 0`)
+  are skipped so the power source is never damaged. `MapComponentUpdate` draws a
+  `OverlayTypes.QuestionMark` marker over every at-risk device while the flare lasts
+  (ADR-0010; gated by `showRiskOverlay`).
   NOTE: fire can't "attach" to buildings (`CanEverAttachFire` requires a Pawn) and
   steel devices have Flammability 0, so `TryAttachFire`/`TryStartFireIn` are no-ops
   on them — hence the flame explosion.
@@ -83,6 +88,12 @@ vanilla solar-flare condition via Harmony + reflection-registered components.
   `Map.gameConditionManager.ElectricityDisabled(Map)` is true — the one method we patch.
 - `GameConditionManager.ActiveConditions` exposes the active conditions list.
 - `FireUtility.TryAttachFire(this Thing, float fireSize, Thing instigator)` — 3 args in 1.6; instigator may be null.
+- `CompPowerTrader.PowerOutput` is negative for a consumer (its draw magnitude) and
+  positive for a producer — used both to exempt generators and to filter by draw.
+- `Map.overlayDrawer.DrawOverlay(Thing, OverlayTypes)` is **transient**: it's cleared
+  each frame in `DrawAllOverlays()`, so re-enqueue every frame from `MapComponentUpdate`.
+  That hook runs for every map *after* `DrawAllOverlays`, so only enqueue for
+  `Find.CurrentMap` — a non-drawn map's queue is never flushed.
 
 ## Gotchas (learned the hard way)
 
